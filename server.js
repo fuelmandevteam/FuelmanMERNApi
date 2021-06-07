@@ -13,6 +13,9 @@ app.use(express.json({extended : false}))
 //DEFINE Routes
 
 app.use('/api/users',require('./routes/api/users'));
+app.use('/api/vendors',require('./routes/api/vendors'));
+app.use('/api/validate',require('./routes/api/validate'));
+
 
 
 app.listen(PORT , () =>{
