@@ -10,6 +10,9 @@ router.get('/',(req,res)=>{
 
 
 
+// @route    GET api/validate
+// @desc     Check Email in  User db
+// @access   Public
 router.get('/user/email',[
 
 ],async (req,res)=>{
@@ -51,6 +54,11 @@ router.get('/user/email',[
 
 
 
+
+
+// @route    GET api/validate
+// @desc     Check Mobile in  User db
+// @access   Public
 router.get('/user/mobile',[
 ],async (req,res)=>{
     const errors = validationResult(req)
@@ -59,9 +67,7 @@ router.get('/user/mobile',[
             errors : errors.array()
         })
     }
-
     const { mobile_no } = req.body;
-
     User.findOne({mobile_no : mobile_no}, function (err,data){
         if (err) {
             res.status(200).send({
