@@ -1,4 +1,3 @@
 {
     "mongoURI":"mongodb+srv://adminfuelman:adminfuelman@clusterfuelman.si5xa.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-
 }

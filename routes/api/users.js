@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { check, validationResult} = require('express-validator/check');
+const { check, validationResult} = require('express-validator');
 const bcrypt = require('bcryptjs')
 const gravatar = require('gravatar');
 
@@ -110,7 +110,17 @@ router.get('/getuserdata',(req,res)=>{
 })
 
 
-router.put('/edit/user',(req,res)=>{
+router.put('/edit/user',[
+    check('_id','id is manditorry ').isEmpty()
+],(req,res)=>{
+
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        res.status(400).json({
+            errors : errors.array()
+        })
+    }
+    
     const { _id , name ,mobile_no , email_id ,dob,address_line_1 ,address_line_2 ,avatar ,login_type}  = req.body;
     let user = new User(
         {name,mobile_no,email_id,dob,address_line_1,address_line_2,avatar,login_type}
