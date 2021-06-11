@@ -62,53 +62,27 @@ router.get('/getvendordata',(req,res)=>{
     }
 })
 
-// @route    GET api/users/'
-// @desc     get user User
-// @access   Public
-router.get('/getvendordata',(req,res)=>{
-    try {
-        User.findOne({_id : req.body._id}, function (err,data){
-            if(err){
-                res.status(500).send({
-                    errors : err
-                })
-            }else if(data){
-                res.status(200).send({
-                    results : data
-                })
-            }else{
-                res.status(500).send({
-                    errors : 'something went wrong'
-                })
-            }
-    })
-        
-    } catch (err) {
-        res.status(500).send(err)
-    }
-})
 
-//get vendor by name
-router.get('/getvendorname',(req,res)=>{
+
+//Register vendor
+router.post('/register',async (req,res)=>{
+    
+    const {_id, name, mobile_no, email_id, No_of_workers, workers_name, shop_address, city, state, shop_licence, shop_image, avatar, lat, long, distance_covered, isshop_active} = req.body;
     try {
-        Vendor.findOne({name : req.body.name}, function (err,data){
-            if(err){
-                res.status(500).send({
-                    errors : err
-                })
-            }else if(data){
-                res.status(200).send({
-                    results : data
-                })
-            }else{
-                res.status(500).send({
-                    errors : 'something went wrong'
-                })
-            }
+        let vendor = new Vendor(
+            {name, mobile_no, email_id, No_of_workers, workers_name, shop_address, city, state, shop_licence, shop_image, avatar, lat, long, distance_covered, isshop_active}
+        );
+        await vendor.save();
+    res.status(200).send({
+        results : vendor,
+        errors : null
     })
-        
     } catch (err) {
-        res.status(500).send(err)
+        console.log(err.message);
+        res.status(500).send({
+            results : null,
+            errors : `server error ${err.message}`
+        });
     }
 })
 
