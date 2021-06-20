@@ -3,7 +3,7 @@ const router = express.Router()
 const { check, validationResult} = require('express-validator');
 
 
-const TwoWheeler = require('../models/TwoWheeler');
+const TwoWheeler = require('../models/TwoWheelervechiles');
 
 router.get('/',(req,res)=>{
     res.send('twowheeler Route');
@@ -98,5 +98,8 @@ async (req,res)=>{
             errors : `server error ${err.message}`
         });
     }
+
     
 })
+
+module.exports=router;

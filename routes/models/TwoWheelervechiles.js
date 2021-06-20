@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Two_wheelerSchema = new mongoose.Schema({
+const TwoWheelervechilesSchema = new mongoose.Schema({
 
     manufacturer : {
         type : String,
@@ -21,4 +21,4 @@ const Two_wheelerSchema = new mongoose.Schema({
 })
 
 
-module.exports = Two_wheeler = mongoose.model('two_wheeler',Two_wheelerSchema)
+module.exports = TwoWheeler = mongoose.model('two_wheeler_vechiles',TwoWheelervechilesSchema)

@@ -17,7 +17,7 @@ app.use('/api/vendors',require('./routes/api/vendors'));
 app.use('/api/validate',require('./routes/api/validate'));
 
 app.use('/api/distance',require('./routes/api/distance'));
-app.use('/api/twowheeler',require('./routes/api/twowheeler'));
+app.use('/api/twowheelervechiles',require('./routes/api/twowheelervechiles'));
 
 
 
