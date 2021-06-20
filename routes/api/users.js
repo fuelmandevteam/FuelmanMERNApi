@@ -27,7 +27,7 @@ router.get('/getallusers',(req,res)=>{
             if (err){
                 res.status(409).send({
                     results : null,
-                    errors : err
+                    errors : err.message
                 })
             }
             if (data) {
@@ -48,18 +48,18 @@ router.get('/getallusers',(req,res)=>{
 // @route    POST api/users/register/mobile'
 // @desc     Register User
 // @access   Public
-router.post('/register/mobile',[
-    //check('mobile_no','please enter valid Mobile').isEmpty()
-],
+router.post('/register',
 async (req,res)=>{
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-        res.status(400).json({
-            errors : errors.array()
+    const { name ,mobile_no , email_id ,dob,address_line_1 ,address_line_2 ,avatar ,login_type}  = req.body;
+
+    if (email_id == null && mobile_no == null) {
+        res.status(400).send({
+            results: null,
+            errors : 'email_id or mobile_no one of them is not null'
         })
     }
 
-    const { _id , name ,mobile_no , email_id ,dob,address_line_1 ,address_line_2 ,avatar ,login_type}  = req.body;
+
     try {
 
     let user = new User(
@@ -68,7 +68,9 @@ async (req,res)=>{
 
     await user.save();
     res.status(200).send({
-        results : user,
+        results : {
+            msg : `user is register succesfully`
+        },
         errors : null
     })
 
@@ -87,11 +89,25 @@ async (req,res)=>{
 // @desc     get user User
 // @access   Public
 router.get('/getuserdata',(req,res)=>{
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+        res.status(400).json({
+            errors : 'check validations'
+        })
+    }
+
+    if (req.body._id == "" || req.body._id == null) {
+        res.status(400).send({
+            errors : '_id should not be null or empty'
+        })
+    }
+
+
     try {
         User.findOne({_id : req.body._id}, function (err,data){
             if(err){
                 res.status(500).send({
-                    errors : err
+                    errors : 'internal server error'
                 })
             }else if(data){
                 res.status(200).send({
