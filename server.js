@@ -15,9 +15,8 @@ app.use(express.json({extended : false}))
 app.use('/api/users',require('./routes/api/users'));
 app.use('/api/vendors',require('./routes/api/vendors'));
 app.use('/api/validate',require('./routes/api/validate'));
-
 app.use('/api/distance',require('./routes/api/distance'));
-app.use('/api/twowheelervechiles',require('./routes/api/twowheelervechiles'));
+app.use('/api/twowheelervehicles',require('./routes/api/twowheelervehicles'));
 
 
 
