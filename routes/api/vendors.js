@@ -36,6 +36,33 @@ router.get('/getallvendors',(req,res)=>{
     }
 })
 
+// get vendor by distance
+
+router.post('/getvendorsloc',(req,res)=>{    
+    try {
+        Vendor.find({city:req.body.city}, function(err, data){
+            if (err){
+                res.status(409).send({
+                    results : null,
+                    errors : err
+                })
+            }
+            if (data) {
+                res.status(200).send({
+                    results : data,
+                    errors : null
+                })
+            }
+          });
+    } catch (err) {
+        res.status(409).send({
+            results : null,
+            errors : err
+        })
+    }
+})
+
+
 // @route    GET api/vendors/'
 // @desc     get vendors by id
 // @access   Public
