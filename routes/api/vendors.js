@@ -2,6 +2,7 @@ const express = require('express');
 const Vendor = require('../models/Vendor');
 const router = express.Router()
 
+
 // @route    POST api/users
 // @desc     Register User
 // @access   Public
@@ -38,7 +39,7 @@ router.get('/getallvendors',(req,res)=>{
 
 // get vendor by distance
 
-router.post('/getvendorsloc',(req,res)=>{    
+router.get('/getvendorsloc',(req,res)=>{    
     try {
         Vendor.find({city:req.body.city}, function(err, data){
             if (err){
@@ -48,8 +49,17 @@ router.post('/getvendorsloc',(req,res)=>{
                 })
             }
             if (data) {
+                const arr=[];
+                data.forEach( item => {
+                    let dist = getdistance(req.body.lat,req.body.lon,item.lat,item.long,"k");
+                    console.log(dist);
+                    if(dist<=item.distance_covered)
+                    {
+                        arr.push(item);
+                    }
+                });
                 res.status(200).send({
-                    results : data,
+                    results : arr,
                     errors : null
                 })
             }
@@ -130,4 +140,29 @@ router.get('/check/vendor',(req,res) => {
     }
     
 })
+
+//distance fuction
+function getdistance(lat1, lon1, lat2, lon2, unit) {
+	if ((lat1 == lat2) && (lon1 == lon2)) {
+		return 0;
+	}
+	else {
+		var radlat1 = Math.PI * lat1/180;
+		var radlat2 = Math.PI * lat2/180;
+		var theta = lon1-lon2;
+		var radtheta = Math.PI * theta/180;
+		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		if (dist > 1) {
+			dist = 1;
+		}
+		dist = Math.acos(dist);
+		dist = dist * 180/Math.PI;
+		dist = dist * 60 * 1.1515;
+		if (unit=="K") { dist = dist * 1.609344 }
+		if (unit=="N") { dist = dist * 0.8684 }
+		return dist;
+	}
+}
+
+
 module.exports = router;
