@@ -1,6 +1,7 @@
 const express = require('express');
 const Vendor = require('../models/Vendor');
 const router = express.Router()
+const { check, validationResult} = require('express-validator');
 
 
 // @route    POST api/users
@@ -39,7 +40,17 @@ router.get('/getallvendors',(req,res)=>{
 
 // get vendor by distance
 
-router.get('/getvendorsloc',(req,res)=>{    
+router.get('/getvendorsloc',[
+    check('city','please enter your city').isEmpty(),
+    check('lat','please enter correct lattitude value').isEmpty(),
+    check('lon','please enter correct longitude value').isEmpty()
+    ], (req,res)=>{ 
+        const errors = validationResult(req)
+        if(!errors.isEmpty()){
+        res.status(400).json({
+            errors : errors.array()
+        })
+        }   
     try {
         Vendor.find({city:req.body.city}, function(err, data){
             if (err){
