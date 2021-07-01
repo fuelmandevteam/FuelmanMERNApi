@@ -12,7 +12,7 @@ const ServicesSchema = new mongoose.Schema({
     },
     icon_url : {
         type : String,
-        default : false
+        default : null
     },
     is_two_wheel : {
         type : Boolean,

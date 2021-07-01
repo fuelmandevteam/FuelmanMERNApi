@@ -14,4 +14,38 @@ router.get('/',async (req,res)=>{
 })
 
 
+
+// @route    POST api/services'
+// @desc     Add new Services 
+// @access   Public
+router.post('/addnewservice',
+async (req,res)=>{
+    const { service_name ,service_type , icon_url ,is_two_wheel,is_four_wheel}  = req.body;
+
+
+    try {
+
+    let service = new Services(
+        { service_name ,service_type , icon_url ,is_two_wheel,is_four_wheel}
+    )
+
+    await service.save();
+    res.status(200).send({
+        results : {
+            msg : `service added succesfully`
+        },
+        errors : null
+    })
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({
+            results : null,
+            errors : `server error ${err.message}`
+        });
+    }
+    
+})
+
+
 module.exports = router;
