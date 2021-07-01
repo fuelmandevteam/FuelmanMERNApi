@@ -21,8 +21,6 @@ router.get('/',async (req,res)=>{
 router.post('/addnewservice',
 async (req,res)=>{
     const { service_name ,service_type , icon_url ,is_two_wheel,is_four_wheel}  = req.body;
-
-
     try {
 
     let service = new Services(
