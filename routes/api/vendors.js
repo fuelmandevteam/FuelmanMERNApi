@@ -135,10 +135,11 @@ router.post('/register',async (req,res)=>{
 })
 
 //register mobile number
-router.post('/registermobile',async (req,res) => {
-    const {mobile_no,email_id} = req.body;
+router.post('/registermobile',[
+    check('mobile_no','please enter your mobile Number').isEmpty().isLength(10)],async (req,res) => {
+    const {mobile_no} = req.body;
     try {
-        let vendor = new Vendor({mobile_no,email_id});
+        let vendor = new Vendor({mobile_no});
         await vendor.save();
         res.status(200).send({
             results : vendor._id,
@@ -162,8 +163,9 @@ router.get('/checkvendor',(req,res) => {
                     errors : err
                 })
             }else if(data){
+                console.log('Mobile Number already exits');
                 res.status(200).send({
-                    results : data
+                    results : data._id
                 })
             }else{
                 res.status(500).send({

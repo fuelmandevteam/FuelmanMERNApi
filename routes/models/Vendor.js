@@ -13,7 +13,6 @@ const VendorSchema = new mongoose.Schema({
     }, 
     email_id : {
         type : String,
-        unique : true,
         default : null
     },
     No_of_workers:{
