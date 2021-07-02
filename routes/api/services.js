@@ -18,8 +18,22 @@ router.get('/',async (req,res)=>{
 // @route    POST api/services'
 // @desc     Add new Services 
 // @access   Public
-router.post('/addnewservice',
+router.post('/addnewservice', [
+    check('service_name', 'Service_name').not().isEmpty(),
+    check('service_type', 'Service_type').not().isEmpty(),
+    check('icon_url', 'Icon_url').not().isEmpty(),
+
+],
 async (req,res)=>{
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+       let msg = ''
+       error.array().forEach(item => {
+           msg = msg + item.msg + ", "
+       })
+       
+       return res.status(400).json({ errors: `${msg} are required` });
+    }
     const { service_name ,service_type , icon_url ,is_two_wheel,is_four_wheel}  = req.body;
     try {
 
