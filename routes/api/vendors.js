@@ -134,6 +134,50 @@ router.post('/register',async (req,res)=>{
     }
 })
 
+//register mobile number
+router.post('/registermobile',[
+    check('mobile_no','please enter your mobile Number').isEmpty().isLength(10)],async (req,res) => {
+    const {mobile_no} = req.body;
+    try {
+        let vendor = new Vendor({mobile_no});
+        await vendor.save();
+        res.status(200).send({
+            results : vendor._id,
+            errors : null
+        })
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send({
+            results : null,
+            errors : `server error ${err.message}`
+        });
+    }
+})
+
+//check vendor
+router.get('/checkvendor',(req,res) => {
+    try {
+        Vendor.findOne({mobile_no : req.body.mobile_no}, function (err,data){
+            if(err){
+                res.status(500).send({
+                    errors : err
+                })
+            }else if(data){
+                console.log('Mobile Number already exits');
+                res.status(200).send({
+                    results : data._id
+                })
+            }else{
+                res.status(500).send({
+                    errors : 'something went wrong'
+                })
+            }
+    })
+        
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
 
 router.get('/check/vendor',(req,res) => {
     const {name } = req.body;
