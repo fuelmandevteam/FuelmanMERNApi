@@ -148,7 +148,7 @@ router.post('/registermobile',[
         let vendor = new Vendor({mobile_no});
         await vendor.save();
         res.status(200).send({
-            results : vendor._id,
+            _id : vendor._id,
             msg : 'mobile number is resgister successfully',
             errors : null
         })
@@ -180,7 +180,7 @@ router.get('/checkvendor',[
                 console.log('Mobile Number already exits');
                 res.status(200).send({
                     results : data._id,
-                    msg : 'Mobile Number already exits',
+                    msg : data.mobile_no + 'already exits',
                     isRegister : true
                 })
             }else{
