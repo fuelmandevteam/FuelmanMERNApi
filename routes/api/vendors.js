@@ -149,6 +149,7 @@ router.post('/registermobile',[
         await vendor.save();
         res.status(200).send({
             results : vendor._id,
+            msg : 'mobile number is resgister successfully',
             errors : null
         })
     } catch (err) {
