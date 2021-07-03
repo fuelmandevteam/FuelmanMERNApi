@@ -59,5 +59,23 @@ async (req,res)=>{
     
 })
 
+router.get('/getallservices' , async(req,res)=>
+{
+    try {
+        Services.find({}, function(err, data){
 
-module.exports = router;    
+            if(data){
+                res.status(200).send({
+                    resukts : data
+                })
+            }
+        })
+    } catch(error) {
+        res.status(500).send({
+            errors: error
+        })
+    }
+})
+
+
+module.exports = router;
