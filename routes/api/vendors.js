@@ -179,9 +179,12 @@ router.get('/checkvendor',[
             }else if(data){
                 console.log('Mobile Number already exits');
                 res.status(200).send({
-                    results : data._id,
+                    results : {
+                        _id : data._id,
+                        isRegister : true
+                    },
                     msg : data.mobile_no + 'already exits',
-                    isRegister : true
+                    
                 })
             }else{
                 res.status(500).send({
