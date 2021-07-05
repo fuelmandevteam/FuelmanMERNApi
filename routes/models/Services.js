@@ -14,6 +14,14 @@ const ServicesSchema = new mongoose.Schema({
         type : String,
         default : null
     },
+    sub_services_1 : {
+        type : Array,
+        default : null
+    },
+    sub_services_2 : {
+        type : Array,
+        default : null
+    },
     is_two_wheel : {
         type : Boolean,
         default : false
