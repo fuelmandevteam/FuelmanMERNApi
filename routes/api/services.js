@@ -19,7 +19,7 @@ router.get('/',async (req,res)=>{
 // @desc     Add new Services 
 // @access   Public
 router.post('/addnewservice', [
-    check('service_name', 'Service_name').not().isEmpty(),
+    check('service_names', 'service_names').not().isEmpty(),
     check('service_type', 'Service_type').not().isEmpty(),
     check('icon_url', 'Icon_url').not().isEmpty(),
 
@@ -34,11 +34,11 @@ async (req,res)=>{
        
        return res.status(400).json({ errors: `${msg} are required` });
     }
-    const { service_name ,service_type , icon_url, sub_services_1, sub_services_2 ,is_two_wheel,is_four_wheel}  = req.body;
+    const { affected_area,service_names ,service_type , icon_url ,is_two_wheel,is_four_wheel}  = req.body;
     try {
 
     let service = new Services(
-        { service_name ,service_type , icon_url , sub_services_1,sub_services_2 ,is_two_wheel,is_four_wheel}
+        { affected_area, service_names ,service_type , icon_url  ,is_two_wheel,is_four_wheel}
     )
 
     await service.save();

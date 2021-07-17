@@ -2,8 +2,12 @@ const mongoose = require('mongoose');
 
 
 const ServicesSchema = new mongoose.Schema({
-    service_name : {
+    affected_area :{
         type : String,
+        default : null
+    },
+    service_names : {
+        type : Array,
         default : null
     },
     service_type : {
@@ -12,14 +16,6 @@ const ServicesSchema = new mongoose.Schema({
     },
     icon_url : {
         type : String,
-        default : null
-    },
-    sub_services_1 : {
-        type : Array,
-        default : null
-    },
-    sub_services_2 : {
-        type : Array,
         default : null
     },
     is_two_wheel : {
