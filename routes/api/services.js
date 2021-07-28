@@ -58,6 +58,98 @@ async (req,res)=>{
     }
     
 })
+// @route    GET api/services
+// @desc     get all services list 
+// @access   Public
+router.get('/getallservice',(req,res)=>{    
+    try {
+        Services.find({}, function(err, data){
+            if (err){
+                res.status(409).send({
+                    results : null,
+                    errors : err
+                })
+            }
+            if (data) {
+                res.status(200).send({
+                    results : data,
+                    errors : null
+                })
+            }
+          });
+    } catch (err) {
+        res.status(409).send({
+            results : null,
+            errors : err
+        })
+    }
+})
 
-
+//Delete services
+router.delete('/deleteservice',(req,res)=>{    
+    try {
+        Services.findOneAndDelete({affected_area : req.body.affected_area}, function (err, data) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                res.status(200).send({
+                    results : data,
+                    msg : affected_area + 'Deleted sucessfully',
+                    errors : null
+                })
+            }
+    })
+ } catch (err) {
+        res.status(409).send({
+            results : null,
+            errors : err
+        })
+    }
+})
+// get by type
+router.get('/getservicebytype',(req,res)=>{    
+    try {
+        Services.find({service_type : req.body.service_type}, function(err, data){
+            if (err){
+                res.status(409).send({
+                    results : null,
+                    errors : err
+                })
+            }
+            if (data) {
+                res.status(200).send({
+                    results : data,
+                    errors : null
+                })
+            }
+          });
+    } catch (err) {
+        res.status(409).send({
+            results : null,
+            errors : err
+        })
+    }
+})
+//update services
+router.put('/updateservice',(req,res)=>{    
+    try {
+        Services.findByIdAndUpdate({_id : req.body._id},{affected_area : req.body.affected_area}, function (err, data) {
+            if (err){
+                console.log(err)
+            }
+            else{
+                res.status(200).send({
+                    results : data,
+                    errors : null
+                })
+            }
+    })
+ } catch (err) {
+        res.status(409).send({
+            results : null,
+            errors : err
+        })
+    }
+})
 module.exports = router;    

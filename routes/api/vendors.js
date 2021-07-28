@@ -11,7 +11,7 @@ router.get('/',(req,res)=>{
     res.send('vendors Route');
 })
 
-// @route    GET api/users
+// @route    GET api/vendors
 // @desc     get all vendor list 
 // @access   Public
 router.get('/getallvendors',(req,res)=>{    
